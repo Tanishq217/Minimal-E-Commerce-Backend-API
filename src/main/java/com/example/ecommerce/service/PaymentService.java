@@ -4,16 +4,10 @@ import com.example.ecommerce.model.Order;
 import com.example.ecommerce.model.Payment;
 import com.example.ecommerce.repository.OrderRepository;
 import com.example.ecommerce.repository.PaymentRepository;
-
-// ADD THESE IMPORTS
 import com.razorpay.RazorpayClient;
-import com.razorpay.RazorpayException;
 import org.json.JSONObject;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-// ... rest of your code ...
 
 @Service
 public class PaymentService {
@@ -24,11 +18,11 @@ public class PaymentService {
     @Autowired
     private OrderRepository orderRepository;
 
-    // You can put these in application.properties later
+    // Replace these with real keys later if you have them
     private String keyId = "rzp_test_YOUR_KEY_HERE";
     private String keySecret = "YOUR_SECRET_HERE";
 
-    public Payment createPayment(String orderId, Double amount) throws RazorpayException {
+    public Payment createPayment(String orderId, Double amount) throws Exception {
         Order order = orderRepository.findById(orderId)
                 .orElseThrow(() -> new RuntimeException("Order not found"));
 
