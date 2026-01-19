@@ -22,13 +22,11 @@ public class WebhookController {
 
     @PostMapping("/payment")
     public ResponseEntity<?> handlePaymentWebhook(@RequestBody Map<String, Object> payload) {
-        // In a real app, you would verify the signature here.
-        // For this assignment, we simply update the order status.
+
 
         System.out.println("Webhook received: " + payload);
 
-        // We assume the payload contains the Order ID somewhere (simplified for assignment)
-        // In a real Razorpay payload, you parse "payload.payment.entity.notes.orderId"
+
 
         return ResponseEntity.ok("Webhook received");
     }

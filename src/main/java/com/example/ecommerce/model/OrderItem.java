@@ -5,7 +5,6 @@ public class OrderItem {
     private Integer quantity;
     private Double price;
 
-    // --- MANUAL GETTERS AND SETTERS ---
     public String getProductId() { return productId; }
     public void setProductId(String productId) { this.productId = productId; }
 

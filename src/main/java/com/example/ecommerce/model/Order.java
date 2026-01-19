@@ -15,7 +15,6 @@ public class Order {
     private Instant createdAt = Instant.now();
     private List<OrderItem> items;
 
-    // --- MANUAL GETTERS AND SETTERS ---
     public String getId() { return id; }
     public void setId(String id) { this.id = id; }
 

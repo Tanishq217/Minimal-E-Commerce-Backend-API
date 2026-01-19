@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Commerce Payment Demo</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; background-color: #f4f4f9; }
+        .card { background: white; padding: 2rem; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); width: 350px; text-align: center; }
+        h2 { color: #333; }
+        input { width: 90%; padding: 10px; margin: 10px 0; border: 1px solid #ddd; border-radius: 5px; }
+        button { background-color: #3399cc; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-size: 16px; width: 100%; }
+        button:hover { background-color: #2878a3; }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <h2>Checkout</h2>
+    <p>Enter your Order ID to pay</p>
+    <input type="text" id="orderId" placeholder="Paste Order ID here (from Postman)">
+    <button id="payBtn" onclick="initiatePayment()">Pay ₹500.00</button>
+</div>
+
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script>
+    async function initiatePayment() {
+        const orderId = document.getElementById('orderId').value;
+        if (!orderId) { alert("Please enter an Order ID"); return; }
+
+        // 1. Call Backend to Create Payment Order
+        const response = await fetch('http://localhost:8081/api/payments/create', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                orderId: orderId,
+                amount: 500.00 // Hardcoded for demo
+            })
+        });
+
+        const data = await response.json();
+
+        if (response.status !== 200) {
+            alert("Error: " + (data.message || "Could not create payment"));
+            return;
+        }
+
+        // 2. Open Razorpay Options
+        var options = {
+            "key": "rzp_live_S5jNn5jINZ0XKP", // <--- PASTE YOUR KEY ID HERE !!!
+            "amount": data.amount * 100,
+            "currency": "INR",
+            "name": "E-Commerce Project",
+            "description": "Payment for Order #" + orderId,
+            "order_id": data.paymentId, // This is the Razorpay Order ID from backend
+            "handler": function (response){
+                alert("Payment Successful!\nPayment ID: " + response.razorpay_payment_id);
+                // Optional: Call webhook endpoint here if needed
+            },
+            "prefill": {
+                "name": "Tanishq Singh",
+                "email": "tanishq@example.com",
+                "contact": "9999999999"
+            },
+            "theme": {
+                "color": "#3399cc"
+            }
+        };
+        var rzp1 = new Razorpay(options);
+        rzp1.open();
+    }
+</script>
+
+</body>
+</html>

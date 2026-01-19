@@ -16,7 +16,6 @@ public class EcommerceApplication {
 		SpringApplication.run(EcommerceApplication.class, args);
 	}
 
-	// THIS BEAN OVERRIDES ALL CONFIG FILES
 	@Bean
 	public MongoClient mongoClient() {
 		String uri = "mongodb+srv://tanishq2127tanishq_db_user:BwdJokxtYevkHwEv@cluster0.ghrs5cr.mongodb.net/ecommerce_db";
