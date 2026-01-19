@@ -19,8 +19,8 @@ public class PaymentService {
     private OrderRepository orderRepository;
 
     // Replace these with real keys later if you have them
-    private String keyId = "rzp_test_YOUR_KEY_HERE";
-    private String keySecret = "YOUR_SECRET_HERE";
+    private String keyId = "rzp_live_S5jNn5jINZ0XKP";
+    private String keySecret = "LT5UEtSp2dqn4NgMF2FN9716";
 
     public Payment createPayment(String orderId, Double amount) throws Exception {
         Order order = orderRepository.findById(orderId)
